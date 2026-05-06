@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
-import { ZardButtonComponent} from '@/shared/components/button';
+import { Navbar } from '@/components/navbar/navbar';
 
 @Component({
   selector: 'app-home.component',
-  imports: [ZardButtonComponent],
+  imports: [Navbar],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
