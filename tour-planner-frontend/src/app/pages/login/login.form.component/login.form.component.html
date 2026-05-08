@@ -1,0 +1,36 @@
+<form [formGroup]="form">
+  <z-form-field #fu="zardId" zardId="username">
+    <label z-form-label [for]="fu.id()" zRequired>Username</label>
+    <z-form-control>
+      <input
+        z-input
+        [id]="fu.id()"
+        type="text"
+        placeholder="Enter your username"
+        formControlName="username"
+      />
+    </z-form-control>
+    @if (form.get('username')?.invalid && form.get('username')?.touched) {
+      <z-form-message>Please enter your username.</z-form-message>
+    }
+  </z-form-field>
+
+  <z-form-field #fp="zardId" zardId="password">
+    <label z-form-label [for]="fp.id()" zRequired>Password</label>
+    <z-form-control>
+      <input
+        z-input
+        [id]="fp.id()"
+        type="password"
+        placeholder="Enter your password"
+        formControlName="password"
+      />
+    </z-form-control>
+    @if (form.get('password')?.invalid && form.get('password')?.touched) {
+      <z-form-message>Please enter your password.</z-form-message>
+    }
+  </z-form-field>
+
+  <button z-button zType="default" type="submit">Login</button>
+  <button z-button zType="default" type="button">Register</button>
+</form>

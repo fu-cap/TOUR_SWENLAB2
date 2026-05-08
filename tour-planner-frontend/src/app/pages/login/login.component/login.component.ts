@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { Content } from '@/components/content/content';
+import { LoginFormComponent} from '@/pages/login/login.form.component/login.form.component';
 
 @Component({
   selector: 'app-login.component',
-  imports: [Content],
+  imports: [Content, LoginFormComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
