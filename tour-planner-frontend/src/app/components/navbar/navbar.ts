@@ -1,9 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, signal } from '@angular/core';
+import { Navbutton } from '@/components/navbutton/navbutton';
+
+export type AppState = 'overview' | 'details' | 'edit' | 'logs' | 'user';
+
+interface NavItem {
+  icon: string;
+  label: string;
+  state: AppState;
+}
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [Navbutton],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {}
+export class Navbar {
+  @Output() activeStateChange = new EventEmitter<AppState>();
+
+  activeState = signal<AppState>('overview');
+
+  navItems: NavItem[] = [
+    {icon: 'list', label: 'Overview', state: 'overview'},
+    {icon: 'dashboard', label: 'Details', state: 'details'},
+    {icon: 'dashboard_2_edit', label: 'Edit', state: 'edit'},
+    {icon: 'comment', label: 'Logs', state: 'logs'},
+    {icon: 'account_circle', label: 'Account', state: 'user'}
+  ];
+
+  onStateChange(state: AppState): void {
+    this.activeState.set(state);
+    this.activeStateChange.emit(state);
+  }
+}
