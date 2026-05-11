@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { AppState } from '@/components/navbar/navbar';
 
 @Component({
   selector: 'app-content',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './content.html',
   styleUrl: './content.css',
 })
-export class Content {}
+export class Content {
+  @Input() activeState?: AppState;
+}

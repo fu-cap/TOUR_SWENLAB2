@@ -1,16 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import * as L from 'leaflet';
 import { Content} from '@/components/content/content';
-import { Navbar } from '@/components/navbar/navbar';
+import { Navbar, AppState } from '@/components/navbar/navbar';
+
 
 @Component({
-  selector: 'app-home.component',
+  selector: 'app-home',
   imports: [Navbar, Content],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private map: L.Map | null = null;
+  currentState = signal<AppState>('overview');
 
   ngOnInit() {
     this.map = L.map('map', { zoomControl: false }).setView([54, 15], 5);

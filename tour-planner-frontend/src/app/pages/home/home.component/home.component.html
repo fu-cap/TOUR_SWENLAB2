@@ -2,8 +2,8 @@
   <div class="map-container">
     <div id="map" class="w-full h-full"></div>
     <div class="overlay">
-      <app-navbar></app-navbar>
-      <app-content></app-content>
+      <app-navbar (activeStateChange)="currentState.set($event)" />
+      <app-content [activeState]="currentState()"></app-content>
     </div>
   </div>
 </div>
