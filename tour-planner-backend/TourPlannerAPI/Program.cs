@@ -1,5 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
-
+// Added comment to test commit and push functionality
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
