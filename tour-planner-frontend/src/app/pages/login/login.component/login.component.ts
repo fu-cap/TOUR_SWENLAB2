@@ -2,15 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { Content } from '@/components/content/content';
 import { LoginFormComponent} from '@/pages/login/login.form.component/login.form.component';
+import { LoginRegisterComponent } from '@/pages/login/login.register.component/login.register.component';
 
 @Component({
   selector: 'app-login.component',
-  imports: [Content, LoginFormComponent],
+  imports: [Content, LoginFormComponent, LoginRegisterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements  OnInit, OnDestroy {
   private map: L.Map | null = null;
+  currentStatus = 'login';
 
   ngOnInit() {
     this.map = L.map('map', {
@@ -32,5 +34,9 @@ export class LoginComponent implements  OnInit, OnDestroy {
   ngOnDestroy() {
     this.map?.remove();
     this.map = null;
+  }
+
+  public handleStatusUpdate(newValue: string) {
+    this.currentStatus = newValue;
   }
 }
