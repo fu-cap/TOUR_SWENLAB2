@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { AppState } from '@/components/navbar/navbar';
+import { Impressum} from '@/components/impressum/impressum';
 
 @Component({
   selector: 'app-content',
-  imports: [],
+  imports: [Impressum],
   templateUrl: './content.html',
   styleUrl: './content.css',
 })

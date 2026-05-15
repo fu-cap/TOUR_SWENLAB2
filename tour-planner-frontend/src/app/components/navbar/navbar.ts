@@ -21,8 +21,8 @@ export class Navbar {
   activeState = signal<AppState>('overview');
 
   mainNavItems: NavItem[] = [
-    {icon: 'list', label: 'Overview', state: 'overview'},
-    {icon: 'dashboard', label: 'Details', state: 'details'},
+    {icon: 'dashboard', label: 'Overview', state: 'overview'},
+    {icon: 'list', label: 'Details', state: 'details'},
     {icon: 'edit', label: 'Edit', state: 'edit'},
     {icon: 'comment', label: 'Logs', state: 'logs'},
   ];
