@@ -38,8 +38,8 @@ public class UserRepository : IUserRepository
     {
         using var connection = new NpgsqlConnection(GetConnectionString());
         const string query = @"
-            INSERT INTO app_user (username, email, password_hash)
-            VALUES (@Username, @Email, @PasswordHash)
+            INSERT INTO app_user (username, email, password_hash, gender, firstname, lastname)
+            VALUES (@Username, @Email, @PasswordHash, @Gender, @Firstname, @Lastname)
             RETURNING id;";
 
         return await connection.ExecuteScalarAsync<Guid>(query, user);

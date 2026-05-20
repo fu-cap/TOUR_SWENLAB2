@@ -42,7 +42,10 @@ public class AuthService : IAuthService
         {
             Username = dto.Username,
             Email = dto.Email,
-            PasswordHash = passwordHash
+            PasswordHash = passwordHash,
+            Gender = dto.Gender,
+            Firstname = dto.Firstname,
+            Lastname = dto.Lastname
         };
 
         // Save to DB

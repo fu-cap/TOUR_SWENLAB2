@@ -33,6 +33,9 @@ CREATE TABLE app_user (
                           username      VARCHAR(50)  NOT NULL,
                           email         VARCHAR(255) NOT NULL,
                           password_hash VARCHAR(255) NOT NULL,
+                          gender        VARCHAR(20)  NOT NULL,
+                          firstname     VARCHAR(100) NOT NULL,
+                          lastname      VARCHAR(100) NOT NULL,
                           created_at    TIMESTAMP    NOT NULL DEFAULT NOW(),
 
                           CONSTRAINT pk_app_user       PRIMARY KEY (id),
