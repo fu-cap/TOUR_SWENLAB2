@@ -1,7 +1,7 @@
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:18
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -9,6 +9,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - pgdata:/var/lib/postgresql/data
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
@@ -30,3 +31,6 @@ services:
       - "80:80"
     depends_on:
       - backend
+
+volumes:
+  pgdata:
