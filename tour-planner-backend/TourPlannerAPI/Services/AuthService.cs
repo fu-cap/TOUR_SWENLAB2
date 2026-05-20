@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using Konscious.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using TourPlannerAPI.DTOs;
 using TourPlannerAPI.Models;
@@ -19,6 +21,25 @@ public class AuthService : IAuthService
         _configuration = configuration;
     }
 
+    private string HashPassword(string password, byte[] salt)
+    {
+        using var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
+        argon2.Salt = salt;
+        argon2.DegreeOfParallelism = 8;
+        argon2.MemorySize = 65536;
+        argon2.Iterations = 4;
+        var hash = argon2.GetBytes(32);
+        return Convert.ToBase64String(hash);
+    }
+
+    private byte[] CreateSalt()
+    {
+        var buffer = new byte[16];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(buffer);
+        return buffer;
+    }
+
     public async Task<string> RegisterAsync(UserRegisterDto dto)
     {
         // Check if user exists
@@ -35,14 +56,16 @@ public class AuthService : IAuthService
         }
 
         // Hash password
-        var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+        var salt = CreateSalt();
+        var passwordHash = HashPassword(dto.Password, salt);
+        var combinedHash = $"{Convert.ToBase64String(salt)}:{passwordHash}";
 
         // Create user object
         var user = new User
         {
             Username = dto.Username,
             Email = dto.Email,
-            PasswordHash = passwordHash,
+            PasswordHash = combinedHash,
             Gender = dto.Gender,
             Firstname = dto.Firstname,
             Lastname = dto.Lastname
@@ -72,7 +95,16 @@ public class AuthService : IAuthService
         }
 
         // Verify password
-        if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
+        var parts = user.PasswordHash.Split(':');
+        if (parts.Length != 2)
+        {
+            throw new Exception("Invalid username or password.");
+        }
+        var salt = Convert.FromBase64String(parts[0]);
+        var expectedHash = parts[1];
+        var actualHash = HashPassword(dto.Password, salt);
+
+        if (expectedHash != actualHash)
         {
             throw new Exception("Invalid username or password.");
         }
